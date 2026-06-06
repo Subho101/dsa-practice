@@ -8,7 +8,7 @@ import com.subho.dsa.graph.util.Pair;
 
 public class DetectCycleUndirected {
 
-    private static boolean isCycleDetectedWithBfs(int src, int V, boolean[] visited, List<List<Integer>> adList) {
+    private static boolean isCycleDetectedWithBfs(int src, boolean[] visited, List<List<Integer>> adList) {
 
         if (adList.isEmpty() || adList.size() == 1) {
             return false;
@@ -38,12 +38,41 @@ public class DetectCycleUndirected {
 
         return false;
     }
+
+    private static boolean isCycleDetectedWithDfs(int src, boolean[] visited, List<List<Integer>> adList) {
+        return dfsUtil(new Pair(src, -1), visited, adList);
+    }
+
+    private static boolean dfsUtil(Pair currPair, boolean[] visited, List<List<Integer>> adList) {
+        
+        if(adList.isEmpty() || adList.size() == 1) return false;
+        
+        int currNode = currPair.i();
+        int currParent = currPair.j();
+        
+        visited[currNode] = true;
+
+        for(int adjNode : adList.get(currNode)) {
+            if(!visited[adjNode]) {
+
+                visited[adjNode] = true;
+                boolean result = dfsUtil(new Pair(adjNode, currNode), visited, adList);
+                if(result) return true;
+
+            } else if(adjNode != currParent) {
+                return true;
+            }
+        }
+
+        return false;
+    }
     
     public static boolean isCycle(int V, List<List<Integer>> adList) {
         boolean[] visited = new boolean[V]; // zero based
         for(int i=0; i<V; i++) {
             if(!visited[i]) {                
-                if(isCycleDetectedWithBfs(i, V, visited, adList)) return true;
+                //if(isCycleDetectedWithBfs(i, visited, adList)) return true;
+                if(isCycleDetectedWithDfs(i, visited, adList)) return true;
             }
         }
 
