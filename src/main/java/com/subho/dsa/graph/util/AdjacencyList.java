@@ -38,6 +38,20 @@ public class AdjacencyList {
         return adList;
     }
 
+    public static List<List<Integer>> prepareAdjListDirected(int V, int[][] edges) {
+        List<List<Integer>> adList = new ArrayList<>();
+        for(int i=0; i<V; i++) {
+            adList.add(new ArrayList<>());
+        }
+        for(int i=0; i<edges.length; i++) {
+            int src = edges[i][0], dest = edges[i][1];
+            adList.get(src).add(dest);
+        }
+        
+
+        return adList;
+    }
+
     public void display(List<List<Integer>> list) {
         for(int i=0; i<list.size(); i++) {
             System.out.println(i + " --> " + list.get(i));
