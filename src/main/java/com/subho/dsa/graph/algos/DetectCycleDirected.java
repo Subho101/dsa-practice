@@ -53,6 +53,7 @@ public class DetectCycleDirected {
 
         return adList;
     }
+    
     public static void main(String[] args) {
         int V = 4; 
         int edges[][] = {{0, 1}, {1, 2}, {2, 0}, {2, 3}};
