@@ -1,59 +1,78 @@
 package com.subho.dsa.graph.algos;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
-import java.util.Stack;
 
 public class WordLadder {
+
+    static class Pair {
+        String word;
+        int level;
+
+        Pair(String word, int level) {
+            this.word = word;
+            this.level = level;
+        }
+    }
+
     // word ladder 1
     public static int ladderLength(String beginWord, String endWord, List<String> wordListOrg) {
 
         if(!wordListOrg.contains(endWord)) return 0;
         
-        Map<String, Integer> distMap = new HashMap<>();
         List<String> wordList = new ArrayList<>(wordListOrg);
-        if(!wordListOrg.contains(beginWord))
-            wordList.add(beginWord);
+        if(!wordListOrg.contains(beginWord)) wordList.add(beginWord);
         
-        
-        for(String word : wordList) {
-            distMap.put(word, 99999999);
-        }
-        distMap.put(beginWord, 0);
-        
-        Stack<String> st = new Stack<>();
-        st.push(beginWord);
+        Set<String> visited = new HashSet<>();
+        Queue<Pair> q = new LinkedList<>();
+        q.offer(new Pair(beginWord, 1));
+        visited.add(beginWord);
         
         Map<String, List<String>> patternMap = createPatternMap(wordList);
-        Map<String, Set<String>> adNbrMap = new HashMap<>();
 
-        for(String word : wordList) {
-            adNbrMap.put(word, getNbList(word, patternMap));
-        }
+        while(!q.isEmpty()) {
+            
+            Pair currP = q.poll();
+            String curr = currP.word;
+            int currLevel = currP.level;
 
-        while(!st.isEmpty()) {
-            String curr = st.pop();
+            if(curr.equals(endWord)) return currLevel;
+
+            char[] chars = curr.toCharArray();
+
+            for(int i=0; i<chars.length; i++) {
+                char original = chars[i];
+                chars[i] = '*';
+                String pattern = new String(chars);
+
+                List<String> nbrs = patternMap.getOrDefault(pattern, Collections.emptyList());
+
+                for(String nbr : nbrs) {
+                    if(!visited.contains(nbr)) {
+                        visited.add(nbr);
+                        q.offer(new Pair(nbr, currLevel + 1));
+                    }
+                }
+
+                patternMap.remove(pattern);
+                chars[i] = original;
+
+            }
 
             System.out.println("Curr word " + curr);
 
-            Set<String> adNbrs = adNbrMap.get(curr);
-
-            System.out.println("Neibhors of " + curr + " | " + adNbrs);
-
-            for(String nbr : adNbrs) {
-
-                if(distMap.get(curr) + 1 < distMap.get(nbr)) {
-                    distMap.put(nbr, distMap.get(curr) + 1);
-                    st.push(nbr);
-                }
-            }   
+              
         }
 
-        return distMap.get(endWord) == 99999999 ? 0 : distMap.get(endWord) + 1;
+        //return distMap.get(endWord) == 99999999 ? 0 : distMap.get(endWord) + 1;
+        return 0;
     }
 
     private static Map<String, List<String>> createPatternMap(List<String> wordList) {
@@ -75,28 +94,6 @@ public class WordLadder {
 
         System.out.println(patternMap);
         return patternMap;
-    }
-
-    private static Set<String> getNbList(String word, Map<String, List<String>> patternMap) {
-        Set<String> nbrs = new HashSet<>();
-
-        char[] chars = word.toCharArray();
-
-        for(int i=0; i<chars.length; i++) {
-            char original = chars[i];
-            
-            chars[i] = '*';
-
-            List<String> nbr = patternMap.get(new String(chars));
-            if(nbr != null && nbr.size() > 0) {
-                nbrs.addAll(nbr);
-            }
-
-            chars[i] = original;
-        }
-
-        nbrs.remove(word);
-        return nbrs;
     }
 
     public static void main(String[] args) {
