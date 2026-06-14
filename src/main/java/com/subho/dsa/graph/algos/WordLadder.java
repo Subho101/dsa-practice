@@ -75,6 +75,67 @@ public class WordLadder {
         return 0;
     }
 
+    // word ladder 2
+    public static List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
+
+        Set<String> wordSet = new HashSet<>(wordList);
+        if(!wordSet.contains(endWord)) return Collections.emptyList();
+
+        Map<String, List<String>> patternMap = createPatternMap(wordList);
+        System.out.println("Pattern Map Created " + patternMap);
+        List<List<String>> result = new ArrayList<>();
+        Queue<List<String>> q = new LinkedList<>();
+        Set<String> visited = new HashSet<>();
+        q.offer(new ArrayList<>(List.of(beginWord)));
+
+        while(!q.isEmpty()) {
+            int levelSize = q.size();
+            Set<String> selectedWords = new HashSet<>();
+            
+            for(int i=0; i<levelSize; i++) {
+                List<String> currLevel = q.poll();
+                String lastWord = currLevel.get(currLevel.size() - 1);
+
+                System.out.println("Last word " + lastWord);
+
+                if(lastWord.equals(endWord)) {
+                    System.out.println("Last word matched. " + result);
+                    result.add(currLevel);
+                    continue;
+                }
+
+                char[] chars = lastWord.toCharArray();
+
+                for(int j=0; j<chars.length; j++) {
+                    char original = chars[j];
+                    chars[j] = '*';
+                    String pattern = new String(chars);
+                    System.out.println("Curr Pattern " + pattern);
+
+                    List<String> nbrWords = patternMap.getOrDefault(pattern, Collections.emptyList());
+                    System.out.println("Neibhours " + nbrWords);
+
+                    for(String nbrWord : nbrWords) {
+                        if(!visited.contains(nbrWord)) {
+                            List<String> nbrList = new ArrayList<>(currLevel);
+                            nbrList.add(nbrWord); 
+                            q.offer(nbrList);
+                            selectedWords.add(nbrWord);  
+
+                        }
+                    }
+                    chars[j] = original;
+                }
+            }
+
+            for(String word : selectedWords) {
+                visited.add(word);
+            }
+        }
+        
+        return result;
+    }
+
     private static Map<String, List<String>> createPatternMap(List<String> wordList) {
         Map<String, List<String>> patternMap = new HashMap<>();
 
@@ -97,14 +158,17 @@ public class WordLadder {
     }
 
     public static void main(String[] args) {
-        //List<String> wordList = List.of("hot","dot","dog","lot","log","cog");
-        List<String> wordList = List.of("hot","dog");
+        List<String> wordList = List.of("hot","dot","dog","lot","log","cog");
+        //List<String> wordList = List.of("hot","dog");
         // Map<String, List<String>> mp = createPatternMap(wordList);
         // Set<String> nbrs = getNbList("dot", mp);
         // System.out.println(nbrs);
-        //String beginWord = "hit", endWord = "cog";
-        String beginWord = "hot", endWord = "dog";
-        int length = ladderLength(beginWord, endWord, wordList);
-        System.out.println(length);
+        String beginWord = "hit", endWord = "cog";
+        //String beginWord = "hot", endWord = "dog";
+        // int length = ladderLength(beginWord, endWord, wordList);
+        // System.out.println(length);
+
+        System.out.println("Ladders");
+        System.out.println(findLadders(beginWord, endWord, wordList));
     }
 }
