@@ -2,6 +2,8 @@ package com.subho.dsa.graph.algos;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.PriorityQueue;
@@ -66,6 +68,57 @@ public class DjiktraPrintShortestPath {
         return result;
     }
 
+    public static List<Integer> shortestPathOptimized(int n, int m, int edges[][]) {
+        List<Integer> result = new ArrayList<>();
+
+        List<List<Pair>> adList = prepareAdList(m, edges);
+        int[] dist = new int[n+1];
+        int[] parent = new int[n+1];
+        Arrays.fill(dist, Integer.MAX_VALUE);
+        dist[1] = 0;
+
+        for(int i=0; i<=n; i++) {
+            parent[i] = i;
+        }
+
+        PriorityQueue<Pair> pq = new PriorityQueue<>();
+        pq.offer(new Pair(1, 0));
+
+        while (!pq.isEmpty()) {
+            Pair curr = pq.poll();
+            int currNode = curr.node;
+
+            List<Pair> adNbrs = adList.get(currNode);
+
+            for(Pair nbr : adNbrs) {
+                int nbNode = nbr.node;
+                int nbWt = nbr.wt;
+                
+                if(dist[currNode] + nbWt < dist[nbNode]) {
+                    dist[nbNode] = dist[currNode] + nbWt;
+                    parent[nbNode] = currNode;
+                    pq.offer(new Pair(nbNode, dist[nbNode]));
+                }
+            }
+        }
+
+        if(dist[n] == Integer.MAX_VALUE) {
+            return new ArrayList<>();
+        }
+
+        int node = n;
+
+        while(parent[node] != node) {
+            result.add(node);
+            node = parent[node];
+        }
+        result.add(1);
+        Collections.reverse(result);
+        
+
+        return result;
+    }
+
     private static List<List<Pair>> prepareAdList(int V, int[][] edges) {
         List<List<Pair>> adList = new ArrayList<>();
 
@@ -87,7 +140,7 @@ public class DjiktraPrintShortestPath {
     public static void main(String[] args) {
         int n = 5, m = 6;
         int[][] edges = {{1, 2, 2}, {2, 5, 5}, {2, 3, 4}, {1, 4, 1}, {4, 3, 3}, {3, 5, 1}};
-        System.out.println(shortestPath(n, m, edges));
+        System.out.println(shortestPathOptimized(n, m, edges));
     }
 
 }
