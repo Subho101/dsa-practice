@@ -2,9 +2,7 @@ package com.subho.dsa.graph.algos;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.PriorityQueue;
 
@@ -29,32 +27,31 @@ public class DjiktraPrintShortestPath {
         List<Integer> result = new ArrayList<>();
 
         List<List<Pair>> adList = prepareAdList(m, edges);
-        int[] dist = new int[n+1];
+        int[] dist = new int[n + 1];
         Arrays.fill(dist, Integer.MAX_VALUE);
         dist[1] = 0;
-        PriorityQueue<List<Pair>> pq = new PriorityQueue<>((a, b) -> a.get(a.size() - 1).wt - b.get(b.size()-1).wt);
+        PriorityQueue<List<Pair>> pq = new PriorityQueue<>((a, b) -> a.get(a.size() - 1).wt - b.get(b.size() - 1).wt);
         pq.offer(new ArrayList<>(List.of(new Pair(1, 0))));
 
-        while(!pq.isEmpty()) {
+        while (!pq.isEmpty()) {
             int size = pq.size();
-            
+
             List<Pair> currLevel = pq.poll();
             int lastNode = currLevel.get(currLevel.size() - 1).node;
-            
-            if(lastNode == n) {
+
+            if (lastNode == n) {
                 currLevel.stream().forEach(p -> result.add(p.node));
                 break;
             }
 
-
-            for(int i=0; i<size; i++) {
+            for (int i = 0; i < size; i++) {
                 List<Pair> adNbrs = adList.get(lastNode);
 
-                for(Pair nbr : adNbrs) {
+                for (Pair nbr : adNbrs) {
                     int nbrNode = nbr.node;
                     int nbrWt = nbr.wt;
 
-                    if(dist[lastNode] + nbrWt < dist[nbrNode]) {
+                    if (dist[lastNode] + nbrWt < dist[nbrNode]) {
                         dist[nbrNode] = dist[lastNode] + nbrWt;
                         List<Pair> newList = new ArrayList<>(currLevel);
                         newList.add(new Pair(nbrNode, dist[nbrNode]));
@@ -62,7 +59,6 @@ public class DjiktraPrintShortestPath {
                     }
                 }
             }
-
         }
 
         return result;
@@ -72,12 +68,12 @@ public class DjiktraPrintShortestPath {
         List<Integer> result = new ArrayList<>();
 
         List<List<Pair>> adList = prepareAdList(m, edges);
-        int[] dist = new int[n+1];
-        int[] parent = new int[n+1];
+        int[] dist = new int[n + 1];
+        int[] parent = new int[n + 1];
         Arrays.fill(dist, Integer.MAX_VALUE);
         dist[1] = 0;
 
-        for(int i=0; i<=n; i++) {
+        for (int i = 0; i <= n; i++) {
             parent[i] = i;
         }
 
@@ -90,11 +86,11 @@ public class DjiktraPrintShortestPath {
 
             List<Pair> adNbrs = adList.get(currNode);
 
-            for(Pair nbr : adNbrs) {
+            for (Pair nbr : adNbrs) {
                 int nbNode = nbr.node;
                 int nbWt = nbr.wt;
-                
-                if(dist[currNode] + nbWt < dist[nbNode]) {
+
+                if (dist[currNode] + nbWt < dist[nbNode]) {
                     dist[nbNode] = dist[currNode] + nbWt;
                     parent[nbNode] = currNode;
                     pq.offer(new Pair(nbNode, dist[nbNode]));
@@ -102,19 +98,18 @@ public class DjiktraPrintShortestPath {
             }
         }
 
-        if(dist[n] == Integer.MAX_VALUE) {
+        if (dist[n] == Integer.MAX_VALUE) {
             return new ArrayList<>();
         }
 
         int node = n;
 
-        while(parent[node] != node) {
+        while (parent[node] != node) {
             result.add(node);
             node = parent[node];
         }
         result.add(1);
         Collections.reverse(result);
-        
 
         return result;
     }
@@ -122,11 +117,11 @@ public class DjiktraPrintShortestPath {
     private static List<List<Pair>> prepareAdList(int V, int[][] edges) {
         List<List<Pair>> adList = new ArrayList<>();
 
-        for(int i=1; i<=V; i++) {
+        for (int i = 1; i <= V; i++) {
             adList.add(new ArrayList<>());
         }
 
-        for(int i=0; i<edges.length; i++) {
+        for (int i = 0; i < edges.length; i++) {
             int src = edges[i][0];
             int dest = edges[i][1];
             int wt = edges[i][2];
@@ -142,5 +137,4 @@ public class DjiktraPrintShortestPath {
         int[][] edges = {{1, 2, 2}, {2, 5, 5}, {2, 3, 4}, {1, 4, 1}, {4, 3, 3}, {3, 5, 1}};
         System.out.println(shortestPathOptimized(n, m, edges));
     }
-
 }

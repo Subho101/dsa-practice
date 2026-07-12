@@ -12,9 +12,9 @@ public class DetectCycleDirected {
 
         List<List<Integer>> adList = prepareAdjList(V, edges);
 
-        for(int i=0; i<V; i++) {
-            if(!visited[i]) {
-                if(dfs(i, adList, visited, pathVisited)) return true;
+        for (int i = 0; i < V; i++) {
+            if (!visited[i]) {
+                if (dfs(i, adList, visited, pathVisited)) return true;
             }
         }
 
@@ -27,11 +27,11 @@ public class DetectCycleDirected {
 
         List<Integer> nbrs = adList.get(node);
 
-        for(int nbr : nbrs) {
-            if(!visited[nbr]) {
+        for (int nbr : nbrs) {
+            if (!visited[nbr]) {
                 boolean result = dfs(nbr, adList, visited, pathVisited);
-                if(result) return true;
-            } else if(pathVisited[nbr]) {
+                if (result) return true;
+            } else if (pathVisited[nbr]) {
                 return true;
             }
         }
@@ -42,20 +42,19 @@ public class DetectCycleDirected {
 
     private static List<List<Integer>> prepareAdjList(int V, int[][] edges) {
         List<List<Integer>> adList = new ArrayList<>();
-        for(int i=0; i<V; i++) {
+        for (int i = 0; i < V; i++) {
             adList.add(new ArrayList<>());
         }
-        for(int i=0; i<edges.length; i++) {
+        for (int i = 0; i < edges.length; i++) {
             int src = edges[i][0], dest = edges[i][1];
             adList.get(src).add(dest);
         }
-        
 
         return adList;
     }
-    
+
     public static void main(String[] args) {
-        int V = 4; 
+        int V = 4;
         int edges[][] = {{0, 1}, {1, 2}, {2, 0}, {2, 3}};
         System.out.println(detectCycle(V, edges));
     }

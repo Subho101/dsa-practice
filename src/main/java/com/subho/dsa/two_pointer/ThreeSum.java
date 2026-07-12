@@ -11,20 +11,21 @@ public class ThreeSum {
         List<List<Integer>> result = new ArrayList<>();
         Set<List<Integer>> set = new HashSet<>();
 
-        for(int i=0; i<nums.length; i++) {
+        for (int i = 0; i < nums.length; i++) {
             Set<Integer> tempSet = new HashSet<>();
-            for(int j=i+1; j<nums.length; j++) {    
+            for (int j = i + 1; j < nums.length; j++) {
                 int target = -(nums[i] + nums[j]);
-                if(tempSet.contains(target)) {
+                if (tempSet.contains(target)) {
                     List<Integer> tempList = Arrays.asList(nums[i], nums[j], target);
-                    tempList.sort(null);;
+                    tempList.sort(null);
+                    ;
                     set.add(tempList);
                 }
                 tempSet.add(nums[j]);
             }
         }
 
-        for(List<Integer> trip : set) result.add(trip);
+        for (List<Integer> trip : set) result.add(trip);
 
         return result;
     }
@@ -35,24 +36,24 @@ public class ThreeSum {
 
         Arrays.sort(nums);
 
-        for(int i=0; i<n; i++) {
-            if(i > 0 && nums[i] == nums[i-1]) continue;
-            int j = i+1;
-            int k = n-1;
+        for (int i = 0; i < n; i++) {
+            if (i > 0 && nums[i] == nums[i - 1]) continue;
+            int j = i + 1;
+            int k = n - 1;
 
-            while(j < k) {
+            while (j < k) {
                 int sum = nums[i] + nums[j] + nums[k];
-                if(sum > 0) {
+                if (sum > 0) {
                     k--;
-                } else if(sum < 0) {
+                } else if (sum < 0) {
                     j++;
                 } else {
                     result.add(Arrays.asList(nums[i], nums[j], nums[k]));
                     j++;
                     k--;
 
-                    while(j < k && nums[j] == nums[j-1]) j++;
-                    while(j < k && nums[k] == nums[k+1]) k--;
+                    while (j < k && nums[j] == nums[j - 1]) j++;
+                    while (j < k && nums[k] == nums[k + 1]) k--;
                 }
             }
         }
@@ -61,7 +62,7 @@ public class ThreeSum {
     }
 
     public static void main(String[] args) {
-        int[] nums = {-1,0,1,2,-1,-4};
+        int[] nums = {-1, 0, 1, 2, -1, -4};
 
         System.out.println(threeSumOptimized(nums));
     }

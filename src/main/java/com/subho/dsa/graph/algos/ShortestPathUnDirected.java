@@ -18,12 +18,12 @@ public class ShortestPathUnDirected {
         Stack<Integer> st = new Stack<>();
         st.push(src);
 
-        while(!st.isEmpty()) {
+        while (!st.isEmpty()) {
             int node = st.pop();
 
             List<Integer> adNodes = adList.get(node);
-            for(int adNode : adNodes) {
-                if(dist[node] + 1 < dist[adNode]) {
+            for (int adNode : adNodes) {
+                if (dist[node] + 1 < dist[adNode]) {
                     dist[adNode] = dist[node] + 1;
                     st.push(adNode);
                 }
@@ -37,23 +37,20 @@ public class ShortestPathUnDirected {
 
         List<List<Integer>> adList = new ArrayList<>();
 
-        for(int i=0; i<V; i++) adList.add(new ArrayList<>());
-        for(int i=0; i<edges.length; i++) {
+        for (int i = 0; i < V; i++) adList.add(new ArrayList<>());
+        for (int i = 0; i < edges.length; i++) {
             adList.get(edges[i][0]).add(edges[i][1]);
             adList.get(edges[i][1]).add(edges[i][0]);
         }
 
         return adList;
-
-    } 
+    }
 
     public static void main(String[] args) {
-        int V = 9, src = 0; 
+        int V = 9, src = 0;
         int edges[][] = {{0, 1}, {0, 3}, {1, 2}, {3, 4}, {4, 5}, {2, 6}, {5, 6}, {6, 7}, {6, 8}, {7, 8}};
 
         int[] result = shortestPath(V, edges, src);
         System.out.println(Arrays.toString(result));
-        
     }
-
 }

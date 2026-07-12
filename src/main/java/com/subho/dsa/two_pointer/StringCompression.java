@@ -6,13 +6,13 @@ public class StringCompression {
         int high = 0, low = 0;
         int writeIndex = 0;
 
-        while(high < chars.length) {
-            while(high < chars.length && chars[low] == chars[high]) high++;
+        while (high < chars.length) {
+            while (high < chars.length && chars[low] == chars[high]) high++;
 
             int len = high - low;
             chars[writeIndex++] = chars[low];
-            if(len > 1) {
-                for(char ch : String.valueOf(len).toCharArray()) {
+            if (len > 1) {
+                for (char ch : String.valueOf(len).toCharArray()) {
                     chars[writeIndex++] = ch;
                 }
             }
@@ -24,9 +24,9 @@ public class StringCompression {
     }
 
     public static void main(String[] args) {
-        //char[] chars = {'a','a','b','b','c','c','c'};
-        //char[] chars = {'a'};
-        char[] chars = {'a','b','b','b','b','b','b','b','b','b','b','b','b'};
+        // char[] chars = {'a','a','b','b','c','c','c'};
+        // char[] chars = {'a'};
+        char[] chars = {'a', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b'};
         System.out.println(compress(chars));
     }
 }

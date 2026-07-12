@@ -2,9 +2,8 @@ package com.subho.dsa.algos;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.jupiter.api.Test;
-
 import com.subho.dsa.graph.algos.AlienDictionnary;
+import org.junit.jupiter.api.Test;
 
 public class AlienDictionaryTest {
 
@@ -41,23 +40,22 @@ public class AlienDictionaryTest {
 
     @Test
     public void test2() {
-        String[] dict =  {"baa", "abcd", "abca", "cab", "cad"};
+        String[] dict = {"baa", "abcd", "abca", "cab", "cad"};
         String result = AlienDictionnary.findOrder(dict);
         assertEquals("bdac", result);
     }
 
     @Test
     public void test3() {
-        String[] dict =  {"caa", "aaa", "aab"};
+        String[] dict = {"caa", "aaa", "aab"};
         String result = AlienDictionnary.findOrder(dict);
         assertEquals("cab", result);
     }
 
     @Test
     public void test4() {
-        String[] dict =  {"ab", "cd", "ef", "ad"};
+        String[] dict = {"ab", "cd", "ef", "ad"};
         String result = AlienDictionnary.findOrder(dict);
         assertEquals("", result);
     }
-
 }
