@@ -3,7 +3,7 @@ package com.subho.dsa.two_pointer;
 import java.util.Arrays;
 
 public class BoatsToSavePeople {
-    public  static int numRescueBoats(int[] people, int limit) {
+    public static int numRescueBoats(int[] people, int limit) {
         Arrays.sort(people);
         int count = 0;
 
@@ -11,7 +11,7 @@ public class BoatsToSavePeople {
 
         while (left <= right) {
             int sum = people[left] + people[right];
-            if(sum <= limit) {
+            if (sum <= limit) {
                 count++;
                 left++;
                 right--;
@@ -21,17 +21,17 @@ public class BoatsToSavePeople {
             }
         }
 
-        return count; 
+        return count;
     }
 
     public static void main(String[] args) {
-        //int[] people = {3,2,2,1};
-        //int limit = 3;
-        
-        //int[] people = {3,5,3,4};
-        //int limit = 5;
-        
-        int[] people = {1,5,3,5}; // expected 3
+        // int[] people = {3,2,2,1};
+        // int limit = 3;
+
+        // int[] people = {3,5,3,4};
+        // int limit = 5;
+
+        int[] people = {1, 5, 3, 5}; // expected 3
         int limit = 7;
 
         System.out.println(numRescueBoats(people, limit));

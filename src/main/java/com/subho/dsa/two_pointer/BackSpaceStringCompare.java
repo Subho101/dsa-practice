@@ -3,23 +3,29 @@ package com.subho.dsa.two_pointer;
 public class BackSpaceStringCompare {
     public static boolean backspaceCompare(String s, String t) {
 
-        System.out.println(getValidIndex(s, s.length()-1));
+        String rs = getNormalizedString(s);
+        String ts = getNormalizedString(t);
 
-        
-        return false;
+        return rs.equals(ts);
     }
 
-    private static int getValidIndex(String s, int index) {
-        int backspace = 0;
+    private static String getNormalizedString(String s) {
+        int bp = 0;
+        StringBuilder rs = new StringBuilder();
+        for (int i = s.length() - 1; i >= 0; i--) {
+            if (s.charAt(i) != '#' && bp == 0) {
+                rs.append(s.charAt(i));
+                continue;
+            }
 
-        while(index >= 0) {
-            if (backspace == 0 && s.charAt(index) != '#') break;
-            else if(s.charAt(index) == '#') backspace++;
-            else backspace--;
-            index--;
+            if (s.charAt(i) == '#') {
+                bp++;
+            } else {
+                bp--;
+            }
         }
 
-        return index;
+        return rs.reverse().toString();
     }
 
     public static void main(String[] args) {

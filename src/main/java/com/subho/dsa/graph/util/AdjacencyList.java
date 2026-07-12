@@ -4,15 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AdjacencyList {
-    
+
     public List<List<Integer>> getAdListUndirected(int V, List<List<Integer>> edges) {
         List<List<Integer>> adList = new ArrayList<>();
 
-        for(int i=0; i<=V; i++) {
+        for (int i = 0; i <= V; i++) {
             adList.add(new ArrayList<>());
         }
 
-        for(List<Integer> edge : edges) {
+        for (List<Integer> edge : edges) {
             int src = edge.get(0);
             int dest = edge.get(1);
             adList.get(src).add(dest);
@@ -25,11 +25,11 @@ public class AdjacencyList {
     public List<List<Integer>> getAdListDirected(int V, List<List<Integer>> edges) {
         List<List<Integer>> adList = new ArrayList<>();
 
-        for(int i=0; i<=V; i++) {
+        for (int i = 0; i <= V; i++) {
             adList.add(new ArrayList<>());
         }
 
-        for(List<Integer> edge : edges) {
+        for (List<Integer> edge : edges) {
             int src = edge.get(0);
             int dest = edge.get(1);
             adList.get(src).add(dest);
@@ -40,20 +40,19 @@ public class AdjacencyList {
 
     public static List<List<Integer>> prepareAdjListDirected(int V, int[][] edges) {
         List<List<Integer>> adList = new ArrayList<>();
-        for(int i=0; i<V; i++) {
+        for (int i = 0; i < V; i++) {
             adList.add(new ArrayList<>());
         }
-        for(int i=0; i<edges.length; i++) {
+        for (int i = 0; i < edges.length; i++) {
             int src = edges[i][0], dest = edges[i][1];
             adList.get(src).add(dest);
         }
-        
 
         return adList;
     }
 
     public void display(List<List<Integer>> list) {
-        for(int i=0; i<list.size(); i++) {
+        for (int i = 0; i < list.size(); i++) {
             System.out.println(i + " --> " + list.get(i));
         }
     }
@@ -66,5 +65,4 @@ public class AdjacencyList {
         System.out.println("--------------");
         list.display(list.getAdListUndirected(9, grp));
     }
-
 }

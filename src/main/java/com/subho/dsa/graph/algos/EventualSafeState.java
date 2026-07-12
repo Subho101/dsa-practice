@@ -12,8 +12,8 @@ public class EventualSafeState {
         boolean[] visited = new boolean[graph.length];
         boolean[] pathVisited = new boolean[graph.length];
 
-        for(int i=0; i<visited.length; i++) {
-            if(!visited[i]) {
+        for (int i = 0; i < visited.length; i++) {
+            if (!visited[i]) {
                 dfs(i, visited, pathVisited, graph, safeNodes);
             }
         }
@@ -21,22 +21,21 @@ public class EventualSafeState {
         Collections.sort(safeNodes);
 
         return safeNodes;
-        
     }
 
-    private static boolean dfs(int node, boolean[] visited, boolean[] pathVisited, 
-        int[][] graph, List<Integer> safeNodes) {
+    private static boolean dfs(
+            int node, boolean[] visited, boolean[] pathVisited, int[][] graph, List<Integer> safeNodes) {
 
         visited[node] = true;
         pathVisited[node] = true;
 
         int[] nbrs = graph[node];
 
-        for(int nbr : nbrs) {
-            if(!visited[nbr]) {
+        for (int nbr : nbrs) {
+            if (!visited[nbr]) {
                 boolean result = dfs(nbr, visited, pathVisited, graph, safeNodes);
-                if(result) return true;
-            } else if(pathVisited[nbr]) {
+                if (result) return true;
+            } else if (pathVisited[nbr]) {
                 return true;
             }
         }
@@ -46,7 +45,7 @@ public class EventualSafeState {
     }
 
     public static void main(String[] args) {
-        int[][] graph = {{1,2},{2,3},{5},{0},{5},{},{}};
+        int[][] graph = {{1, 2}, {2, 3}, {5}, {0}, {5}, {}, {}};
         List<Integer> safenodes = eventualSafeNodes(graph);
         System.out.println(safenodes);
     }
