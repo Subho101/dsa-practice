@@ -6,7 +6,7 @@ public class MaxConsecutiveOne {
         int maxLen = 0;
         int l = 0;
 
-        int[] mp = { -1, -1 };
+        int[] mp = {-1, -1};
 
         for (int r = 0; r < nums.length; r++) {
             if (nums[r] == 1) {
@@ -27,9 +27,9 @@ public class MaxConsecutiveOne {
 
     public static void main(String[] args) {
         String out = "Expected %d, got %d";
-        assert findMaxConsecutiveOnes(new int[] { 1, 1, 0, 1, 1, 1 }) == 3
-                : String.format(out, 3, findMaxConsecutiveOnes(new int[] { 1, 1, 0, 1, 1, 1 }));
-        assert findMaxConsecutiveOnes(new int[] { 1, 0, 1, 1, 0, 1 }) == 2
-                : String.format(out, 3, findMaxConsecutiveOnes(new int[] { 1, 0, 1, 1, 0, 1 }));
+        assert findMaxConsecutiveOnes(new int[] {1, 1, 0, 1, 1, 1}) == 3
+                : String.format(out, 3, findMaxConsecutiveOnes(new int[] {1, 1, 0, 1, 1, 1}));
+        assert findMaxConsecutiveOnes(new int[] {1, 0, 1, 1, 0, 1}) == 2
+                : String.format(out, 3, findMaxConsecutiveOnes(new int[] {1, 0, 1, 1, 0, 1}));
     }
 }
