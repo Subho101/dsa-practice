@@ -25,7 +25,7 @@ public class LevelOrderTraversal {
                     queue.offer(currNode.left);
                 if (currNode.right != null)
                     queue.offer(currNode.right);
-                subList.add(currNode.data);
+                subList.add(currNode.val);
             }
 
             ans.add(subList);

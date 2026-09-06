@@ -11,7 +11,7 @@ public class IterativeTraversal {
 
         while (!st.isEmpty()) {
             TreeNode currNode = st.pop();
-            System.out.println(currNode.data);
+            System.out.println(currNode.val);
 
             if (currNode.right != null)
                 st.push(currNode.right);
@@ -35,7 +35,7 @@ public class IterativeTraversal {
                 if (st.isEmpty())
                     break;
                 TreeNode top = st.pop();
-                System.out.println(top.data);
+                System.out.println(top.val);
                 currNode = top.right;
             }
         }
@@ -59,7 +59,7 @@ public class IterativeTraversal {
         }
 
         while (!st2.isEmpty()) {
-            System.out.println(st2.peek().data);
+            System.out.println(st2.peek().val);
             st2.pop();
         }
     }

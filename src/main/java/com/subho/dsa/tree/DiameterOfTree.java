@@ -20,7 +20,7 @@ public class DiameterOfTree {
         int lh = height(root.left);
         int rh = height(root.right);
 
-        System.out.println("MaxH " + maxH + " node " + root.data);
+        System.out.println("MaxH " + maxH + " node " + root.val);
         System.out.println("current: " + (lh + rh));
 
         maxH = Math.max(maxH, lh + rh + 2); // adding 2 here for 2 edge connecting to root
@@ -30,7 +30,7 @@ public class DiameterOfTree {
 
     private static int height(TreeNode node) {
         if (node == null) {
-            return -1; // Since couting edge instead of nodes
+            return -1; // Since counting edge instead of nodes
         }
         int left = height(node.left);
         int right = height(node.right);

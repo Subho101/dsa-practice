@@ -22,14 +22,14 @@ public class Traversal {
     public static void inorder(TreeNode node) {
         if (node != null) {
             inorder(node.left);
-            System.out.print(node.data + ", ");
+            System.out.print(node.val + ", ");
             inorder(node.right);
         }
     }
 
     public static void preorder(TreeNode node) {
         if (node != null) {
-            System.out.print(node.data + ", ");
+            System.out.print(node.val + ", ");
             preorder(node.left);
             preorder(node.right);
         }
@@ -39,7 +39,7 @@ public class Traversal {
         if (node != null) {
             postorder(node.left);
             postorder(node.right);
-            System.out.print(node.data + ", ");
+            System.out.print(node.val + ", ");
         }
     }
 }
