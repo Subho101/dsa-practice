@@ -19,7 +19,7 @@ public class ZigZagTravel {
 
         while (!q.isEmpty()) {
             int size = q.size();
-            List<Integer> subList = new LinkedList<>();
+            LinkedList<Integer> subList = new LinkedList<>();
             for (int i = 0; i < size; i++) {
                 TreeNode currNode = q.poll();
                 if (currNode.left != null)
