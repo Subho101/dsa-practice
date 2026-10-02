@@ -2,42 +2,42 @@ package com.subho.dsa.tree;
 
 import java.util.Stack;
 
-class BSTIterator {
+public class TwoSumBST {
+    static class BSTIterator {
 
-    private boolean isReversed = false;
-    private Stack<TreeNode> st = new Stack<>();
+        private boolean isReversed = false;
+        private Stack<TreeNode> st = new Stack<>();
 
-    public BSTIterator(TreeNode root, boolean isReversed) {
-        this.isReversed = isReversed;
-        pushAll(root);
-    }
+        public BSTIterator(TreeNode root, boolean isReversed) {
+            this.isReversed = isReversed;
+            pushAll(root);
+        }
 
-    public boolean hasNext() {
-        return !st.isEmpty();
-    }
+        public boolean hasNext() {
+            return !st.isEmpty();
+        }
 
-    public int next() {
-        TreeNode temp = st.pop();
-        if (!isReversed)
-            pushAll(temp.right);
-        else
-            pushAll(temp.left);
-        return temp.val;
-    }
+        public int next() {
+            TreeNode temp = st.pop();
+            if (!isReversed)
+                pushAll(temp.right);
+            else
+                pushAll(temp.left);
+            return temp.val;
+        }
 
-    private void pushAll(TreeNode node) {
-        while (node != null) {
-            st.push(node);
-            if (!isReversed) {
-                node = node.left;
-            } else {
-                node = node.right;
+        private void pushAll(TreeNode node) {
+            while (node != null) {
+                st.push(node);
+                if (!isReversed) {
+                    node = node.left;
+                } else {
+                    node = node.right;
+                }
             }
         }
     }
-}
 
-public class TwoSumBST {
     public static boolean findTarget(TreeNode root, int k) {
         if (root == null)
             return false;
