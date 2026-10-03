@@ -8,37 +8,40 @@ https://leetcode.com/problems/longest-continuous-subarray-with-absolute-diff-les
 */
 
 public class LongestSubArrayAbsoluteDiff {
-    public static int longestSubarray(int[] nums, int limit) {
 
-        PriorityQueue<Integer> minQ = new PriorityQueue<>();
-        PriorityQueue<Integer> maxQ = new PriorityQueue<>(Collections.reverseOrder());
+    static class Pair {
+        int elem;
+        int index;
+        Pair(int elem, int index) {
+            this.elem = elem;
+            this.index = index;
+        }
+    }
+
+    public static int longestSubarray(int[] nums, int limit) {
         int maxLen = Integer.MIN_VALUE;
+        PriorityQueue<Pair> minQ = new PriorityQueue<>((p1, p2) -> p1.elem - p2.elem);
+        PriorityQueue<Pair> maxQ = new PriorityQueue<>((p1, p2) -> p2.elem - p1.elem);
+
         int l = 0;
 
         for (int r = 0; r < nums.length; r++) {
-            int currElem = nums[r];
-            minQ.offer(currElem);
-            maxQ.offer(currElem);
+            maxQ.add(new Pair(nums[r], r));
+            minQ.add(new Pair(nums[r], r));
 
-            while ((!maxQ.isEmpty() || !minQ.isEmpty()) &&
-                    (maxQ.peek() - minQ.peek() > limit)) {
-                int start = nums[l];
-                if (start == minQ.peek()) {
-                    minQ.poll();
-                } else {
+            while(l <= r && Math.abs(maxQ.peek().elem - minQ.peek().elem) > limit) {
+                int shrinkIndex = Math.min(maxQ.peek().index, minQ.peek().index) + 1;
+                while (!maxQ.isEmpty() && maxQ.peek().index < shrinkIndex) {
                     maxQ.poll();
                 }
 
-                l++;
+                while (!minQ.isEmpty() && minQ.peek().index < shrinkIndex) {
+                    minQ.poll();
+                }
+                l = shrinkIndex;
             }
 
-            int minElem = minQ.peek();
-            int maxElem = maxQ.peek();
-
-            if (maxElem - minElem <= limit) {
-                maxLen = Math.max(maxLen, r - l + 1);
-            }
-
+            maxLen = Math.max(maxLen, r-l+1);
         }
 
         return maxLen;
@@ -49,9 +52,12 @@ public class LongestSubArrayAbsoluteDiff {
                 : "Expected 2, but got " + longestSubarray(new int[] { 8, 2, 4, 7 }, 4);
 
         assert longestSubarray(new int[] { 10, 1, 2, 4, 7, 2 }, 5) == 4
-                : "Expected 2, but got " + longestSubarray(new int[] { 10, 1, 2, 4, 7, 2 }, 5);
+                : "Expected 4, but got " + longestSubarray(new int[] { 10, 1, 2, 4, 7, 2 }, 5);
 
         assert longestSubarray(new int[] { 4, 2, 2, 2, 4, 4, 2, 2 }, 0) == 3
-                : "Expected 2, but got " + longestSubarray(new int[] { 4, 2, 2, 2, 4, 4, 2, 2 }, 0);
+                : "Expected 3, but got " + longestSubarray(new int[] { 4, 2, 2, 2, 4, 4, 2, 2 }, 0);
+
+        assert longestSubarray(new int[] { 1,5,6,7,8,10,6,5,6 }, 4) == 5
+                : "Expected 5, but got " + longestSubarray(new int[] { 1,5,6,7,8,10,6,5,6 }, 4);
     }
 }
